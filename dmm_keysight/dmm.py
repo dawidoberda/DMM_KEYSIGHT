@@ -68,6 +68,25 @@ class DMM:
     def measure_voltage_dc(self):
         return self.device_instance.query(':MEASure:VOLT:DC? AUTO,DEFault')
 
+    """
+    :return AC voltage value
+    """
+    def measure_voltage_ac(self):
+        return self.device_instance.query(':MEASure:VOLT:AC? AUTO,DEFault')
+
+
+    """
+    :return DC current value
+    """
+    def measure_current_dc(self):
+        return self.device_instance.query('MEAS:CURR:DC?')
+
+    """
+     :return AC current value
+     """
+    def measure_current_ac(self):
+        return self.device_instance.query('MEAS:CURR:AC?')
+
 
     """
     Method perform 10 measurments of resistance and using numpy calculate average and standard deviation
@@ -92,7 +111,117 @@ class DMM:
 
         return average, stddev
 
-    #TODO: zrobic srednio dla pomiaru wszustkich mierzonych wartosci, dodac pomiary innych wartosci
+    """
+    Method perform 10 measurments of 4 wire resistance and using numpy calculate average and standard deviation
+    :return average, standard deviation
+    """
+    def calculate_average_RES_4wire(self):
+        self.device_instance.write('CONF:FRES AUTO,DEF')
+        time.sleep(0.1)
+        self.device_instance.write('SAMP:COUN 10')
+        time.sleep(0.1)
+        meas_str = self.device_instance.query('READ?', delay=5)
+        time.sleep(0.1)
+        meas_list = str(meas_str).split(',')
+        meas_floats = []
+        for measure in meas_list:
+            measure = float(measure)
+            meas_floats.append(measure)
+
+        average = np.average(meas_floats)
+        stddev = np.std(meas_floats)
+
+        return average, stddev
+
+
+    """
+    Method perform 10 measurments of dc voltage and using numpy calculate average and standard deviation
+    :return average, standard deviation
+    """
+    def calculate_average_voltage_DC(self):
+        self.device_instance.write('CONF:VOLT:DC AUTO,DEF')
+        time.sleep(0.1)
+        self.device_instance.write('SAMP:COUN 10')
+        time.sleep(0.1)
+        meas_str = self.device_instance.query('READ?', delay=5)
+        time.sleep(0.1)
+        meas_list = str(meas_str).split(',')
+        meas_floats = []
+        for measure in meas_list:
+            measure = float(measure)
+            meas_floats.append(measure)
+
+        average = np.average(meas_floats)
+        stddev = np.std(meas_floats)
+
+        return average, stddev
+
+    """
+    Method perform 10 measurments of ac voltage and using numpy calculate average and standard deviation
+    :return average, standard deviation
+    """
+    def calculate_average_voltage_AC(self):
+        self.device_instance.write('CONF:VOLT:AC AUTO,DEF')
+        time.sleep(0.1)
+        self.device_instance.write('SAMP:COUN 10')
+        time.sleep(0.1)
+        meas_str = self.device_instance.query('READ?', delay=5)
+        time.sleep(0.1)
+        meas_list = str(meas_str).split(',')
+        meas_floats = []
+        for measure in meas_list:
+            measure = float(measure)
+            meas_floats.append(measure)
+
+        average = np.average(meas_floats)
+        stddev = np.std(meas_floats)
+
+        return average, stddev
+
+    """
+    Method perform 10 measurments of dc current and using numpy calculate average and standard deviation
+    :return average, standard deviation
+    """
+    def calculate_average_current_dc(self):
+        self.device_instance.write('CONF:CURR:DC AUTO,DEF')
+        time.sleep(0.1)
+        self.device_instance.write('SAMP:COUN 10')
+        time.sleep(0.1)
+        meas_str = self.device_instance.query('READ?', delay=5)
+        time.sleep(0.1)
+        meas_list = str(meas_str).split(',')
+        meas_floats = []
+        for measure in meas_list:
+            measure = float(measure)
+            meas_floats.append(measure)
+
+        average = np.average(meas_floats)
+        stddev = np.std(meas_floats)
+
+        return average, stddev
+
+    """
+    Method perform 10 measurments of ac current and using numpy calculate average and standard deviation
+    :return average, standard deviation
+    """
+    def calculate_average_current_ac(self):
+        self.device_instance.write('CONF:CURR:AC AUTO,DEF')
+        time.sleep(0.1)
+        self.device_instance.write('SAMP:COUN 10')
+        time.sleep(0.1)
+        meas_str = self.device_instance.query('READ?', delay=5)
+        time.sleep(0.1)
+        meas_list = str(meas_str).split(',')
+        meas_floats = []
+        for measure in meas_list:
+            measure = float(measure)
+            meas_floats.append(measure)
+
+        average = np.average(meas_floats)
+        stddev = np.std(meas_floats)
+
+        return average, stddev
+
 
 if __name__=="__main__":
     print('DMM class. Start Test')
@@ -109,7 +238,16 @@ if __name__=="__main__":
     print(dmm.measure_resistance_2wire())
     print(dmm.measure_voltage_dc())
 
-    average, standard_dev = dmm.calculate_average_RES_2wire()
-    tolerance = standard_dev *3
-    print(f'{average} +/- {tolerance}')
+    # average, standard_dev = dmm.calculate_average_RES_2wire()
+    # tolerance = standard_dev *3
+    # print('2 wire resistance:')
+    # print(f'{average} +/- {tolerance}')
+    #
+    # average_vol, standard_dev_vol = dmm.calculate_average_voltage_DC()
+    # tolerance_vol = standard_dev_vol * 3
+    # print('DC voltage:')
+    # print(f'{average_vol} +/- {tolerance_vol}')
+
+    print(dmm.measure_current_dc())
+
     #print(dmm.selftest())
