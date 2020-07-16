@@ -1,5 +1,7 @@
 from setuptools import setup
-
+#trzeba to zainstalowac pip install --editable .
+#TODO: dodac kolejny wykonywalny skrypt do testu 4 wire resistance
+#TODO: dodac wymagania do stup() wszystkie pakiey ktore sa zainstalowane.
 setup(
     name="DMM Keysight",
     version="2020.07.15",
@@ -9,7 +11,7 @@ setup(
     py_modules=['dmm_test'],
     entry_points={
         'console_scripts': [
-            'dmm_test = dmm_test:test'
+            'dmm_test=dmm_test:test'
         ]
-    }
+    },
 )
