@@ -1,7 +1,8 @@
 from setuptools import setup
 #trzeba to zainstalowac pip install --editable .
-#TODO: dodac kolejny wykonywalny skrypt do testu 4 wire resistance
+#TODO: dodac kolejne pomiary do measurement_tool
 #TODO: dodac wymagania do stup() wszystkie pakiey ktore sa zainstalowane.
+#TODO: dodac do entry_points measurement_tool
 setup(
     name="DMM Keysight",
     version="2020.07.15",
