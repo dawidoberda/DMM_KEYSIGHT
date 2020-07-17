@@ -8,7 +8,7 @@ setup(
     description="Package which can be used to control Keysight dmm using Visa toolkit",
     author="Dawid Oberda",
     author_email="dawidoberda@gmail.com",
-    py_modules=['dmm_test'],
+    py_modules=['dmm_test', 'measurement_tool'],
     entry_points={
         'console_scripts': [
             'dmm_test=dmm_test:test'
